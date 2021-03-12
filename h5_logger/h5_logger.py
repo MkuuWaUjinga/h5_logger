@@ -7,6 +7,7 @@ import h5py
 import numpy as np
 import arrow
 import json
+import torch
 
 
 class H5Logger(object):
@@ -115,6 +116,8 @@ class H5Logger(object):
 
 def convert_to_np(val):
     if type(val) != np.ndarray:
+        if torch.is_tensor(val):
+            return val.cpu().detach().numpy()
         return np.array([val])
     else:
         return val
