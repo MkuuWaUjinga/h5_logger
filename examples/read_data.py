@@ -11,7 +11,7 @@ data = h5py.File(filename,'r')
 print()
 print('attrs')
 print('----------------------')
-for k,v in data.attrs.iteritems():
+for k,v in data.attrs.items():
     print(k,v)
 
 
@@ -23,7 +23,7 @@ print(data.attrs['datetime'])
 print()
 print('datasets')
 print('----------------------')
-for k,v in data.iteritems():
+for k,v in data.items():
     print(k,v.shape)
 
 
