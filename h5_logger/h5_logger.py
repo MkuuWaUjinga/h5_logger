@@ -16,14 +16,14 @@ class H5Logger(object):
     def __init__(
             self,
             filename='data.hdf5',
-            auto_incr=False, 
+            auto_incr=False,
             auto_incr_format=Default_Auto_Incr_Format,
             param_attr = None
             ):
         self.auto_incr = auto_incr
         self.auto_incr_format = auto_incr_format
         self.h5file = None
-        self.dataset_dict = None 
+        self.dataset_dict = None
         self.filename = filename
         self.param_attr = param_attr
 
@@ -66,10 +66,10 @@ class H5Logger(object):
         if self.h5file is not None:
             self.h5file.close()
         self.h5file = None
-        self.dataset_dict = None 
+        self.dataset_dict = None
 
     def add(self,data):
-        
+
         if self.h5file is None:
             # Create h5df file and dataset_dict file and add values
             next_filename = self.get_next_filename()
@@ -86,9 +86,8 @@ class H5Logger(object):
                 self.dataset_dict[key] = self.h5file.create_dataset(key, shape, maxshape=maxshape, dtype=dtype)
                 self.dataset_dict[key][0] = val_as_np
 
-            # Add data creation time 
+            # Add data creation time
             now = arrow.now()
-            self.h5file.attrs['timestamp'] = now.timestamp
             self.h5file.attrs['datetime'] = now.format('YYYY-MM-DD HH:mm:ss')
 
             # Add parameter attribute is it exists
@@ -107,7 +106,7 @@ class H5Logger(object):
                 if not type(val) == np.ndarray:
                     val_as_np = convert_to_np(val)
                 else:
-                    val_as_np = np.reshape(val, (1,) + val.shape) 
+                    val_as_np = np.reshape(val, (1,) + val.shape)
                 self.dataset_dict[key][num_vals] = val_as_np
 
 
@@ -120,7 +119,7 @@ def convert_to_np(val):
     else:
         return val
 
-def fileparts(filename): 
+def fileparts(filename):
     dirname, filename_only = os.path.split(filename)
     base, ext = os.path.splitext(filename_only)
     if not dirname:
